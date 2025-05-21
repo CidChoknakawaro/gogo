@@ -20,6 +20,7 @@ interface FlowchartVisualizationProps {
   edges?: Edge[];
   interactive?: boolean;
   className?: string;
+  onNodeClick?: (node: Node) => void;
 }
 
 const defaultNodes: Node[] = [
@@ -95,6 +96,7 @@ const FlowchartVisualization: React.FC<FlowchartVisualizationProps> = ({
   edges = defaultEdges,
   interactive = false,
   className = "",
+  onNodeClick,
 }) => {
   const getBorderColor = (type: Node["type"]) => {
     switch (type) {
@@ -130,18 +132,20 @@ const FlowchartVisualization: React.FC<FlowchartVisualizationProps> = ({
     });
 
   return (
-    <div className={`relative w-full h-[500px] bg-slate-50 rounded-lg border border-slate-200 overflow-hidden ${className}`}>
+    <div className={`relative w-full h-[700px] bg-slate-50 rounded-lg border border-slate-200 overflow-hidden py-10 ${className}`}>
       {renderEdges()}
 
       {nodes.map(node => (
         <motion.div
-          key={node.id}
-          onClick={() => interactive && console.log("Clicked", node)}
-          whileHover={interactive ? { scale: 1.05 } : {}}
-          transition={{ type: "spring", stiffness: 300 }}
-          className={`absolute w-[150px] rounded-lg shadow-md border-2 bg-white ${getBorderColor(node.type)}`}
-          style={{ left: node.position.x, top: node.position.y, zIndex: 2 }}
-        >
+  key={node.id}
+  drag={interactive}
+  dragMomentum={false}
+  onClick={() => interactive && onNodeClick?.(node)}
+  whileHover={interactive ? { scale: 1.05 } : {}}
+  transition={{ type: "spring", stiffness: 300 }}
+  className={`absolute w-[150px] rounded-lg shadow-md border-2 bg-white cursor-move ${getBorderColor(node.type)}`}
+  style={{ left: node.position.x * 1.5, top: node.position.y * 1.5, zIndex: 2 }}
+>
           <img
             src={node.imageSrc}
             alt={node.label}
