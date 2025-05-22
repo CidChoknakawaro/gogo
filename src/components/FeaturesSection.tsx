@@ -170,51 +170,53 @@ const FeaturesSection = () => {
             แพ็กเกจการใช้งาน
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {/* Free Plan */}
-            <div className="border rounded-lg p-6 space-y-4">
-              <h3 className="text-xl font-semibold">Free</h3>
-              <p className="text-sm text-gray-600">
-                เริ่มต้นง่าย ไม่เสียค่าใช้จ่าย
-              </p>
-              <ul className="text-sm text-gray-700 space-y-2">
-                <li>วางแผนได้ 1 ทริป</li>
-                <li>ลากวางได้</li>
-                <li>บันทึกอัตโนมัติ</li>
-              </ul>
-              <Button variant="outline" className="w-full mt-4">
-                เลือกแพ็กเกจ
-              </Button>
-            </div>
+            {/* FREE */}
+<div className="plan bg-white rounded-lg shadow p-6">
+  <h2 className="text-xl font-bold mb-2">Free</h2>
+  <p className="text-gray-600 mb-4">เริ่มต้นง่าย ไม่เสียค่าใช้จ่าย</p>
 
-            {/* Pro Plan */}
-            <div className="border-2 border-gogo-blue rounded-lg p-6 bg-gogo-blue/10 space-y-4">
-              <h3 className="text-xl font-semibold">Pro</h3>
-              <p className="text-sm text-gray-600">
-                เหมาะสำหรับนักเดินทางตัวยง
-              </p>
-              <ul className="text-sm text-gray-700 space-y-2">
-                <li>ไม่จำกัดจำนวนทริป</li>
-                <li>ปลดล็อกฟีเจอร์ AI</li>
-                <li>นำเข้า/ส่งออก PDF</li>
-              </ul>
-              <Button className="w-full mt-4">เลือกแพ็กเกจ Pro</Button>
-            </div>
+  <ul className="space-y-2 mb-6">
+    <li>วางแผนได้สูงสุด 1 ทริป</li>
+    <li>AI prompts 5 ครั้งต่อเดือน</li>
+    <li>บันทึกอัตโนมัติ</li>
+  </ul>
 
-            {/* Enterprise Plan */}
-            <div className="border rounded-lg p-6 space-y-4">
-              <h3 className="text-xl font-semibold">Enterprise</h3>
-              <p className="text-sm text-gray-600">
-                สำหรับธุรกิจทัวร์และผู้ดูแลกลุ่ม
-              </p>
-              <ul className="text-sm text-gray-700 space-y-2">
-                <li>การทำงานร่วมกันแบบทีม</li>
-                <li>แชร์แผนได้แบบลิงก์</li>
-                <li>รายงานและสถิติ</li>
-              </ul>
-              <Button variant="outline" className="w-full mt-4">
-                ติดต่อฝ่ายขาย
-              </Button>
-            </div>
+  <button className="w-full py-2 bg-gogo-blue text-white rounded">
+    เลือกแพ็กเกจ Free
+  </button>
+</div>
+
+{/* PRO */}
+<div className="plan bg-white rounded-lg shadow p-6">
+  <h2 className="text-xl font-bold mb-2">Pro</h2>
+  <p className="text-gray-600 mb-4">เหมาะสำหรับนักเดินทาง</p>
+
+  <ul className="space-y-2 mb-6">
+    <li>วางแผนได้ไม่จำกัดจำนวนทริป</li>
+    <li>AI prompts 100 ครั้งต่อเดือน</li>
+    <li>Export PDF</li>
+  </ul>
+
+  <button className="w-full py-2 bg-gogo-blue text-white rounded">
+    เลือกแพ็กเกจ Pro
+  </button>
+</div>
+
+{/* ENTERPRISE */}
+<div className="plan bg-white rounded-lg shadow p-6">
+  <h2 className="text-xl font-bold mb-2">Enterprise</h2>
+  <p className="text-gray-600 mb-4">สำหรับธุรกิจทัวร์และผู้ดูแลกลุ่ม</p>
+
+  <ul className="space-y-2 mb-6">
+    <li>วางแผนได้ไม่จำกัดจำนวนทริป</li>
+    <li>AI prompts ไม่จำกัด</li>
+    <li>Customize โมเดลได้</li>
+  </ul>
+
+  <button className="w-full py-2 border border-gray-300 rounded">
+    ติดต่อฝ่ายงาน
+  </button>
+</div>
           </div>
         </div>
 

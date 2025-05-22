@@ -8,7 +8,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleStartPlanning = () => {
-    navigate("/dashboard");
+    navigate("/plan");
   };
 
   return (

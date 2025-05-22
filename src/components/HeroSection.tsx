@@ -17,6 +17,13 @@ const HeroSection = ({
         <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-gogo-blue opacity-10 blur-3xl"></div>
         <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-gogo-green opacity-10 blur-3xl"></div>
       </div>
+      <img
+  src="/gogo_logo_new.png"
+  alt="Gogo Logo"
+  className="w-[400px] h-[150px] rounded-2xl"
+/>
+          <br/>
+          <br/>
 
       <div className="container mx-auto max-w-7xl z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -27,6 +34,8 @@ const HeroSection = ({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            
+          <br/>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gogo-dark leading-tight mb-6">
               เปลี่ยนแค่ไอเดีย <br />
               <span className="text-gogo-blue">เป็นแผนภาพการเดินทางสุดเจ๋ง!</span>
@@ -47,7 +56,19 @@ const HeroSection = ({
               </Button>
             </div>
           </motion.div>
-
+          {/* ด้านขวา - รูปภาพ */}
+         <motion.div
+           className="flex-1 flex justify-center lg:justify-end"
+           initial={{ opacity: 0, x: 20 }}
+           animate={{ opacity: 1, x: 0 }}
+           transition={{ duration: 0.6, delay: 0.2 }}
+         >
+           <img
+             src="dashboard.png"
+             alt="Travel plan preview"
+             className="w-[600px] h-[400px] rounded-2xl border-4 border-gogo-blue shadow-lg object-cover"
+           />
+         </motion.div>
           
         </div>
       </div>
