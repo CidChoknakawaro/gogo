@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import FlowchartVisualization, { Node as ItineraryNode } from "./FlowchartVisualization";
-import { 
-  Plus, Calendar, Map, Clock, Settings, ChevronRight, Undo as UndoIcon 
+import {
+  Plus,
+  Settings,
+  ChevronRight,
+  Undo as UndoIcon,
 } from "lucide-react";
 
 interface Trip {
@@ -88,11 +91,12 @@ export default function TripDashboard() {
     const msPerDay = 1000 * 60 * 60 * 24;
     return Math.ceil((new Date(end).getTime() - new Date(start).getTime()) / msPerDay);
   };
-  // นับสถานที่ (ไม่รวมขนส่ง)
+  // นับจำนวนสถานที่ (ไม่รวมขนส่ง)
   const calculateActivities = () =>
     selectedTrip.itinerary.filter((n) => n.type !== "transport").length;
 
   const invitePeople = () => alert("เชิญเข้าร่วมทริป — ยังไม่รองรับ");
+  const openSettings = () => alert("ไปที่การตั้งค่า — ยังไม่รองรับ");
   const handleNodeClick = (node: ItineraryNode) => setEditingNode(node);
 
   const undoEdit = () => {
@@ -116,25 +120,43 @@ export default function TripDashboard() {
     setEditingNode({ ...editingNode, [field]: val });
   };
 
+  const SEMI_CIRCLE_WIDTH = 192;  // w-48 = 192px
+const SEMI_CIRCLE_HEIGHT = 96;  // h-24 = 96px
+const LOGO_WIDTH = 128;         // w-32 = 128px
+
   return (
-    <div className="min-h-screen bg-gogo-light1 overflow-hidden">
+    <div className="min-h-screen bg-[#dfe0eb] overflow-hidden">
       <div className="container mx-auto px-4 py-6 max-w-screen-xl">
-        {/* HEADER */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gogo-dark">ทริปของฉัน</h1>
+       {/* HEADER */}
+        <div className="relative flex items-center justify-between mb-6 bg-[#2381c8] px-6 py-4">
+          {/* Page Title */}
+          <h1 className="text-2xl font-bold text-white">ทริปของฉัน</h1>
+
+          {/* Logo  Semi-circle */}
+          <div className="relative flex-1 flex justify-center">
+            {/* white semi-circle behind the logo */}
+            <div className="absolute -bottom-8 w-48 h-24 bg-white rounded-b-full"></div>
+            <img
+              src="/gogo_logo_new.png"
+              alt="Logo"
+              className="relative z-10 w-32 h-auto"
+            />
+          </div>
+
+          {/* Settings Button */}
           <Button
-            onClick={invitePeople}
-            className="bg-gogo-blue hover:bg-gogo-blue/90 text-sm px-4 py-2"
+            onClick={openSettings}
+            variant="outline"
+            className="border-white text-black hover:bg-white/50 text-sm px-4 py-2"
           >
-            <Plus className="mr-1 h-4 w-4" /> เชิญเข้าร่วมทริป
+            <Settings className="mr-1 h-4 w-4 text-black" /> การตั้งค่า
           </Button>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-5 gap-4">
-          {/* SIDEBAR */}
-          <aside className="xl:col-span-1 space-y-6 overflow-y-auto max-h-[calc(100vh-120px)] pr-2">
-            {/* ทริปของฉัน */}
-            <div className="bg-white rounded-lg shadow p-4">
+        <div className="grid grid-cols-1 xl:grid-cols-5 gap-4 items-stretch h-[calc(100vh-144px)]">
+          {/* LEFT SIDEBAR */}
+          <aside className="xl:col-span-1 flex flex-col h-full sticky top-0 pr-2">
+            <div className="bg-[#f7f5f5] rounded-lg shadow p-4 flex-1 overflow-y-auto">
               <div className="flex justify-between items-center mb-3">
                 <h2 className="text-base font-semibold text-gogo-dark">ทริปของฉัน</h2>
                 <Button variant="ghost" size="sm" className="text-gogo-blue hover:text-gogo-blue/90 text-xs">
@@ -146,7 +168,7 @@ export default function TripDashboard() {
                   <div
                     key={trip.id}
                     onClick={() => setSelectedTrip(trip)}
-                    className={`p-2 rounded-lg cursor-pointer transition-colors text-sm ${
+                    className={`p-2 rounded-lg cursor-pointer transition-colors    text-sm ${
                       selectedTrip.id === trip.id
                         ? "bg-gogo-blue/10 border-l-4 border-gogo-blue"
                         : "hover:bg-gray-50"
@@ -166,64 +188,20 @@ export default function TripDashboard() {
                 ))}
               </div>
               <Button variant="outline" className="w-full mt-3 border-dashed border-gray-300 text-gray-500 text-sm">
-                <Plus className="mr-2 h-4 w-4" /> เพิ่มทริปใหม่
+                + เพิ่มทริปใหม่
               </Button>
-            </div>
-
-            {/* ระยะเวลา & สถานที่ */}
-            <div className="grid grid-cols-1 gap-3">
-              <Card>
-                <CardHeader className="pb-1">
-                  <CardTitle className="text-xs font-medium text-gray-500">ระยะเวลา</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-xl font-bold text-gogo-dark">
-                    {calculateDays()} วัน
-                  </p>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="pb-1">
-                  <CardTitle className="text-xs font-medium text-gray-500">สถานที่</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-xl font-bold text-gogo-dark">
-                    {calculateActivities()} แห่ง
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* การดำเนินการด่วน */}
-            <div className="bg-white rounded-lg shadow p-4">
-              <h2 className="text-base font-semibold text-gogo-dark mb-2">การดำเนินการด่วน</h2>
-              <div className="space-y-2">
-                {[
-                  { label: "ดูปฏิทิน", Icon: Calendar },
-                  { label: "ดูแผนที่", Icon: Map },
-                  { label: "ทริปล่าสุด", Icon: Clock },
-                  { label: "การตั้งค่า", Icon: Settings },
-                ].map(({ label, Icon }) => (
-                  <Button
-                    key={label}
-                    variant="ghost"
-                    className="w-full justify-start text-gray-700 hover:text-gogo-blue hover:bg-gogo-blue/5 text-sm"
-                  >
-                    <Icon className="mr-2 h-4 w-4" /> {label}
-                  </Button>
-                ))}
-              </div>
             </div>
           </aside>
 
-          {/* MAIN */}
-          <main className="xl:col-span-3 overflow-y-auto max-h-[calc(100vh-120px)]">
+          {/* MAIN CONTENT */}
+          <main className="xl:col-span-3 h-screen sticky top-0 overflow-y-auto bg-[#f7f5f5] rounded-lg">
+            {/* Banner */}
             {selectedTrip && (
-              <motion.div
+              <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white rounded-lg shadow overflow-hidden mb-4"
+                className="bg-[#f7f5f5] rounded-lg shadow overflow-hidden mb-4"
               >
                 <div className="h-36 relative">
                   <img
@@ -241,6 +219,8 @@ export default function TripDashboard() {
                 </div>
               </motion.div>
             )}
+
+            {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 mb-4">
               <Button
                 variant="outline"
@@ -256,12 +236,34 @@ export default function TripDashboard() {
               >
                 ยืนยัน
               </Button>
-              <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-50 text-sm px-4 py-2">
-                ส่งออก
+              <Button
+                variant="outline"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 text-sm px-4 py-2"
+              >
+                Export
               </Button>
+              <Button
+                variant="outline"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 text-sm px-4 py-2"
+              >
+                ระยะเวลา: 3 วัน
+              </Button>
+              <Button
+                variant="outline"
+                className="border-gray-300 text-gray-700 hover:bg-gray-50 text-sm px-4 py-2"
+              >
+                สถานที่: {calculateActivities()} แห่ง
+              </Button>
+              <Button
+            onClick={invitePeople}
+            className="bg-gogo-blue hover:bg-gogo-blue/90 text-sm px-4 py-2"
+          >
+            <Plus className="mr-1 h-4 w-4" /> เชิญเข้าร่วมทริป
+          </Button>
             </div>
 
-            <h2 className="text-xl font-semibold text-gogo-dark mb-3">แผนการเดินทาง</h2>
+            {/* Trip Itinerary */}
+            <h2 className="text-xl font-semibold text-gogo-dark mb-3 text-center">แผนการเดินทาง</h2>
             <FlowchartVisualization
               nodes={selectedTrip.itinerary}
               interactive
@@ -271,34 +273,32 @@ export default function TripDashboard() {
           </main>
 
           {/* EDIT PANEL */}
-          <aside className="xl:col-span-1 bg-white rounded-lg shadow p-4">
+          <aside className="xl:col-span-1 h-screen sticky top-0 bg-[#f7f5f5] rounded-lg shadow p-4">
             <h3 className="text-base font-semibold text-gogo-dark mb-3">แก้ไขกิจกรรม</h3>
             {editingNode ? (
               <div className="space-y-4">
-                {/* Place */}
                 <div>
-                  <label className="text-xs font-medium text-gray-500">สนใจสถานที่แบบไหน 
-                    <br/>ตัวอย่าง: อยากเห็นธรรมชาติ</label>
+                  <label className="text-xs font-medium text-gray-500">
+                    สนใจสถานที่แบบไหน เช่น<br/>
+                    อยากได้บรรยากาศธรรมชาติมากกว่า
+                  </label>
                   <input
                     value={editingNode.label}
                     onChange={(e) => updateEditingField("label", e.target.value)}
                     className="w-full mt-1 border rounded px-2 py-1 text-sm"
                   />
                 </div>
-                {/* Duration */}
                 <div>
                   <label className="text-xs font-medium text-gray-500">ระยะเวลา (ชม.)</label>
                   <input
-                    type="number"
-                    step="0.5"
+                    type="text"
                     value={editingNode.time}
                     onChange={(e) => updateEditingField("time", e.target.value)}
                     className="w-full mt-1 border rounded px-2 py-1 text-sm"
                   />
                 </div>
-                {/* Alternatives */}
                 <div>
-                  <label className="text-xs font-medium text-gray-500">ข้อเสนอแนะทางเลือก</label>
+                  <label className="text-xs font-medium text-gray-500">ข้อเสนอทางเลือก</label>
                   <ul className="mt-1 space-y-1 text-sm">
                     {suggestions.map((s, i) => (
                       <li

@@ -7,8 +7,11 @@ module.exports = {
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
   ],
-  prefix: "",
   theme: {
+    // Override the default sans-serif stack:
+    fontFamily: {
+      sans: ["Mitr", "ui-sans-serif", "system-ui"],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -51,7 +54,7 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom colors based on the new palette
+        // Your custom palette
         gogo: {
           dark: "#0f1718",
           light1: "#f8f7f7",

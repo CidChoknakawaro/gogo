@@ -24,9 +24,8 @@ interface FeatureCardProps {
 const FeatureCard = (
   { icon, title, description, image }: FeatureCardProps = {
     icon: <Zap className="h-6 w-6 text-gogo-blue" />,
-    title: "Feature Title",
-    description:
-      "Feature description goes here explaining the benefit to users.",
+    title: "ชื่อฟีเจอร์",
+    description: "คำอธิบายฟีเจอร์โดยย่อ",
     image: undefined,
   },
 ) => {
@@ -47,7 +46,9 @@ const FeatureCard = (
         </div>
       )}
       <CardContent
-        className={`pt-6 flex flex-col items-start gap-3 ${isExpanded ? "pb-6" : ""}`}
+        className={`pt-6 flex flex-col items-start gap-3 ${
+          isExpanded ? "pb-6" : "pb-4"
+        }`}
       >
         <div className="p-2 rounded-full bg-gogo-blue/10">{icon}</div>
         <h3 className="text-xl font-semibold text-gogo-dark">{title}</h3>
@@ -56,7 +57,7 @@ const FeatureCard = (
         </p>
         {!isExpanded && (
           <button className="text-gogo-blue text-sm font-medium mt-2 hover:underline">
-            Learn more
+            อ่านเพิ่มเติม
           </button>
         )}
       </CardContent>
@@ -71,156 +72,185 @@ interface WhyGogoItemProps {
 
 const WhyGogoItem = (
   { title, description }: WhyGogoItemProps = {
-    title: "Benefit Title",
-    description: "Description of this benefit and why it matters.",
+    title: "ชื่อข้อดี",
+    description: "คำอธิบายเกี่ยวกับข้อดีข้อนี้",
   },
-) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      viewport={{ once: true }}
-      className="flex flex-col gap-2"
-    >
-      <h3 className="text-xl font-semibold">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
-    </motion.div>
-  );
-};
+) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.5 }}
+    viewport={{ once: true }}
+    className="flex flex-col gap-2"
+  >
+    <h3 className="text-xl font-semibold">{title}</h3>
+    <p className="text-muted-foreground">{description}</p>
+  </motion.div>
+);
 
 const FeaturesSection = () => {
   return (
-    <section className="py-20 px-4 md:px-8 bg-gogo-light1">
-      <div className="max-w-7xl mx-auto">
-        {/* Key Features */}
+    <section className="py-24 px-4 md:px-8 bg-gogo-light1">
+      <div className="max-w-7xl mx-auto flex flex-col gap-24">
+        {/* ฟีเจอร์หลัก */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="mb-20"
+          className="space-y-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gogo-dark">
-            Key Features
-          </h2>
-          <p className="text-xl text-muted-foreground text-center max-w-3xl mx-auto mb-12">
-            Everything you need to plan your perfect trip with ease and
-            flexibility
-          </p>
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gogo-dark">
+              ฟีเจอร์เด่นของเรา
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              ทุกสิ่งที่คุณต้องการเพื่อวางแผนทริปในฝันได้อย่างยืดหยุ่นและง่ายดาย
+            </p>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <FeatureCard
               icon={<Zap className="h-6 w-6 text-gogo-blue" />}
-              title="AI-Generated Trip Flow"
-              description="Get a day-by-day itinerary created by AI based on your preferences and travel style. Our advanced algorithms analyze thousands of travel options to create the perfect personalized plan for you."
+              title="แผนเดินทางด้วย AI"
+              description="รับแผนเที่ยวรายวันที่สร้างโดย AI ตามสไตล์และความชอบของคุณ วิเคราะห์ตัวเลือกนับพันเพื่อให้ได้แผนที่เหมาะกับคุณที่สุด"
               image="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=600&q=80"
             />
             <FeatureCard
               icon={<Edit3 className="h-6 w-6 text-gogo-blue" />}
-              title="Editable Flowchart"
-              description="Drag, drop, and modify your itinerary with our intuitive flowchart interface. Easily visualize your entire trip and make changes on the fly with our interactive editor."
+              title="แผนภาพลากวางได้"
+              description="ลากและจัดเรียงแผนเที่ยวได้ด้วยอินเทอร์เฟซ Flowchart ที่เข้าใจง่าย เห็นภาพรวมทั้งทริปและปรับเปลี่ยนได้ทันที"
               image="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=600&q=80"
             />
             <FeatureCard
               icon={<MessageSquare className="h-6 w-6 text-gogo-blue" />}
-              title="Natural Language Input"
-              description="Describe your trip in your own words and watch Gogo transform it into a plan. No need to fill out complicated forms - just tell us what you want in plain English."
+              title="พิมพ์บอกด้วยภาษาคุณ"
+              description="เพียงบอกเราด้วยคำพูดของคุณ Gogo จะแปลงสิ่งนั้นเป็นแผนเที่ยว โดยไม่ต้องกรอกแบบฟอร์มใด ๆ"
               image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=80"
             />
             <FeatureCard
               icon={<Sliders className="h-6 w-6 text-gogo-blue" />}
-              title="Smart Preferences"
-              description="Quick buttons for travel style, budget, and pace to fine-tune your experience. Set your preferences once and let our system remember them for all your future trips."
+              title="ตั้งค่าความชอบอัจฉริยะ"
+              description="เลือกสไตล์การเที่ยว งบประมาณ และความเร็วของทริปได้ในคลิกเดียว ระบบจะจดจำความชอบของคุณอัตโนมัติ"
               image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&q=80"
             />
             <FeatureCard
               icon={<MessageSquare className="h-6 w-6 text-gogo-blue" />}
-              title="Revision Prompts"
-              description='Simply type "make it more peaceful" or "add a food stop" to refine your plan. Our AI understands natural language instructions and can adjust your itinerary accordingly.'
+              title="แก้ไขด้วยคำสั่งง่ายๆ"
+              description='เช่น "ขอเงียบสงบกว่านี้" หรือ "เพิ่มร้านอาหาร" ระบบเข้าใจและปรับแผนให้อัตโนมัติด้วยภาษาแบบคนพูด'
               image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80"
             />
             <FeatureCard
               icon={<Download className="h-6 w-6 text-gogo-blue" />}
-              title="Export Options"
-              description="Save your trip as PDF or export directly to your calendar for easy access. Share your plans with friends and family or keep them for your personal reference."
+              title="ส่งออกได้หลากหลาย"
+              description="บันทึกเป็น PDF หรือเพิ่มเข้าในปฏิทิน แชร์แผนเที่ยวให้เพื่อนหรือเก็บไว้ดูภายหลัง"
               image="https://images.unsplash.com/photo-1423784346385-c1d4dac9893a?w=600&q=80"
             />
             <FeatureCard
               icon={<Save className="h-6 w-6 text-gogo-blue" />}
-              title="Save & Revisit"
-              description="Store your trips in your account and come back to modify them anytime. Your travel plans are securely saved in the cloud for easy access from any device."
+              title="บันทึกแผนไว้แก้ทีหลัง"
+              description="เก็บแผนทริปไว้ในบัญชีของคุณ กลับมาแก้ไขเมื่อไรก็ได้ เข้าถึงได้จากทุกอุปกรณ์"
               image="https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=600&q=80"
             />
             <FeatureCard
               icon={<Calendar className="h-6 w-6 text-gogo-blue" />}
-              title="Flexible Scheduling"
-              description="Adjust timing and duration of activities to create your perfect day. Our minute-by-minute scheduling ensures you make the most of your travel time without feeling rushed."
+              title="จัดเวลายืดหยุ่น"
+              description="ปรับเวลาและช่วงกิจกรรมให้ตรงกับไลฟ์สไตล์ของคุณ ไม่เร่งรีบแต่คุ้มค่าสำหรับทุกวันในทริป"
               image="https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=600&q=80"
             />
           </div>
         </motion.div>
 
-        <Separator className="my-16" />
+        {/* Separator */}
+        <Separator className="my-8" />
 
-        {/* Why Gogo */}
-        <div className="mb-20">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-4 text-gogo-dark">
-              Why Gogo
-            </h2>
-            <p className="text-xl text-muted-foreground text-center max-w-3xl mx-auto mb-16">
-              A new approach to trip planning that puts you in control
-            </p>
-          </motion.div>
+        {/* ตารางราคา */}
+        <div className="w-full max-w-5xl mx-auto bg-white shadow-md rounded-xl p-10 border border-gray-200 space-y-10">
+          <h2 className="text-2xl font-bold text-center text-gogo-dark">
+            แพ็กเกจการใช้งาน
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+            {/* Free Plan */}
+            <div className="border rounded-lg p-6 space-y-4">
+              <h3 className="text-xl font-semibold">Free</h3>
+              <p className="text-sm text-gray-600">
+                เริ่มต้นง่าย ไม่เสียค่าใช้จ่าย
+              </p>
+              <ul className="text-sm text-gray-700 space-y-2">
+                <li>วางแผนได้ 1 ทริป</li>
+                <li>ลากวางได้</li>
+                <li>บันทึกอัตโนมัติ</li>
+              </ul>
+              <Button variant="outline" className="w-full mt-4">
+                เลือกแพ็กเกจ
+              </Button>
+            </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8">
-            <WhyGogoItem
-              title="Flexible Input, Unlimited Imagination"
-              description="Most fields are open text, so you can express your needs without limits. Gogo understands vague, detailed, or emotional input."
-            />
-            <WhyGogoItem
-              title="Smart Planning with a Human Touch"
-              description="Gogo suggests the best order and timing — but you're always in control. Edit anything at any time."
-            />
-            <WhyGogoItem
-              title="Visual Flow, Not Rigid Lists"
-              description="Instead of boring text blocks, your trip is displayed as a visual, connected flowchart that reflects the real feel of your journey."
-            />
+            {/* Pro Plan */}
+            <div className="border-2 border-gogo-blue rounded-lg p-6 bg-gogo-blue/10 space-y-4">
+              <h3 className="text-xl font-semibold">Pro</h3>
+              <p className="text-sm text-gray-600">
+                เหมาะสำหรับนักเดินทางตัวยง
+              </p>
+              <ul className="text-sm text-gray-700 space-y-2">
+                <li>ไม่จำกัดจำนวนทริป</li>
+                <li>ปลดล็อกฟีเจอร์ AI</li>
+                <li>นำเข้า/ส่งออก PDF</li>
+              </ul>
+              <Button className="w-full mt-4">เลือกแพ็กเกจ Pro</Button>
+            </div>
+
+            {/* Enterprise Plan */}
+            <div className="border rounded-lg p-6 space-y-4">
+              <h3 className="text-xl font-semibold">Enterprise</h3>
+              <p className="text-sm text-gray-600">
+                สำหรับธุรกิจทัวร์และผู้ดูแลกลุ่ม
+              </p>
+              <ul className="text-sm text-gray-700 space-y-2">
+                <li>การทำงานร่วมกันแบบทีม</li>
+                <li>แชร์แผนได้แบบลิงก์</li>
+                <li>รายงานและสถิติ</li>
+              </ul>
+              <Button variant="outline" className="w-full mt-4">
+                ติดต่อฝ่ายขาย
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Final CTA */}
+        {/* Separator */}
+        <Separator className="my-8" />
+
+        {/* ทำไมต้อง Gogo */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="bg-gogo-blue/5 rounded-2xl p-8 md:p-12 text-center"
+          className="space-y-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-gogo-dark">
-            Ready to flow your next adventure?
-          </h2>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="text-base px-8 bg-gogo-blue hover:bg-gogo-blue/90"
-            >
-              Plan a Trip Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="text-base px-8 border-gogo-blue text-gogo-blue hover:bg-gogo-blue/10"
-            >
-              Preview a Sample Trip
-            </Button>
+          <div className="text-center space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-gogo-dark">
+              ทำไมต้องใช้ Gogo?
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              วิธีวางแผนเที่ยวแนวใหม่ ที่ให้คุณควบคุมทุกอย่างได้ด้วยตัวเอง
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <WhyGogoItem
+              title="พิมพ์อะไรก็เข้าใจ"
+              description="ใส่ข้อมูลทริปในสไตล์ของคุณ จะละเอียดหรือคลุมเครือก็ได้ Gogo เข้าใจทุกคำที่คุณต้องการจะสื่อ"
+            />
+            <WhyGogoItem
+              title="ระบบแนะนำอัจฉริยะแต่คุณมีสิทธิ์ตัดสินใจ"
+              description="เราช่วยจัดเรียงและเวลาให้เหมาะ แต่คุณสามารถแก้ไขได้ตลอดเวลา"
+            />
+            <WhyGogoItem
+              title="แผนที่เห็นภาพจริง"
+              description="ไม่ใช่แค่รายการสิ่งที่ต้องทำ แต่เป็นภาพการเดินทางที่ไหลต่อเนื่อง เห็นชัดว่าทริปคุณจะเป็นอย่างไร"
+            />
           </div>
         </motion.div>
       </div>
